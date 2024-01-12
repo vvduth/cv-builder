@@ -8,7 +8,7 @@ import {
   ResumeSkills,
   ResumeWorkExperience,
 } from "./types";
-import { ShowForm } from "../settingsSlice";
+import { ShowForm } from "./settingsSlice";
 import { RootState } from "./store";
 export const initialProfile: ResumeProfile = {
   name: "",
@@ -200,3 +200,27 @@ export const resumeSlice = createSlice({
     },
   },
 });
+
+export const {
+  changeCustom,
+  changeEducations,
+  changeProjects,
+  changeProfile,
+  changeSkills,
+  changeWorkExperience,
+  addSectionInForm,
+  moveSectionInForm,
+  deleteSectionInFormByIdx,
+  setResume,
+} = resumeSlice.actions;
+
+export const selectResume = (state: RootState) => state.resume;
+export const selectProfile = (state: RootState) => state.resume.profile;
+export const selectWorkExperiences = (state: RootState) =>
+  state.resume.workExperiences;
+export const selectEducations = (state: RootState) => state.resume.educations;
+export const selectProjects = (state: RootState) => state.resume.projects;
+export const selectSkills = (state: RootState) => state.resume.skills;
+export const selectCustom = (state: RootState) => state.resume.custom;
+
+export default resumeSlice.reducer;
