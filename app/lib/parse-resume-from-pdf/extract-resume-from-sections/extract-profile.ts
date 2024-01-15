@@ -1,9 +1,16 @@
-import { FeatureSet, ResumeSectionToLines, TextItem, TextItems } from "../types";
 import {
-    hasLetter,
-    hasLetterAndIsAllUpperCase,
-    isBold,
-  } from "../group-lines-into-sections";
+  FeatureSet,
+  ResumeSectionToLines,
+  TextItem,
+  TextItems,
+} from "../types";
+import {
+  hasLetter,
+  hasLetterAndIsAllUpperCase,
+  isBold,
+} from "../group-lines-into-sections";
+import { getTextWithHighestFeatureScore } from "./lib/feature-scoring-system";
+import { getSectionLinesByKeywords } from "./lib/get-section-lines";
 
 // Name
 export const matchOnlyLetterSpaceOrPeriod = (item: TextItem) =>
@@ -11,7 +18,7 @@ export const matchOnlyLetterSpaceOrPeriod = (item: TextItem) =>
 
 // Email
 export const matchEmail = (item: TextItem) => item.text.match(/\S+@\S+\.\S+/);
-const hasAt = (item: TextItem) => item.text.includes("@")
+const hasAt = (item: TextItem) => item.text.includes("@");
 
 // Phone
 export const matchPhone = (item: TextItem) =>
@@ -93,10 +100,64 @@ const SUMMARY_FEATURE_SETS: FeatureSet[] = [
   [matchCityAndState, -4, false],
 ];
 
-
 export const extractProfile = (sections: ResumeSectionToLines) => {
   const lines = sections.profile || [];
   const textItems = lines.flat();
 
-  
+  const [name, nameScores] = getTextWithHighestFeatureScore(
+    textItems,
+    NAME_FEATURE_SETS
+  );
+  const [email, emailScores] = getTextWithHighestFeatureScore(
+    textItems,
+    EMAIL_FEATURE_SETS
+  );
+  const [phone, phoneScores] = getTextWithHighestFeatureScore(
+    textItems,
+    PHONE_FEATURE_SETS
+  );
+  const [location, locationScores] = getTextWithHighestFeatureScore(
+    textItems,
+    LOCATION_FEATURE_SETS
+  );
+  const [url, urlScores] = getTextWithHighestFeatureScore(
+    textItems,
+    URL_FEATURE_SETS
+  );
+  const [summary, summaryScores] = getTextWithHighestFeatureScore(
+    textItems,
+    SUMMARY_FEATURE_SETS,
+    undefined,
+    true
+  );
+
+  const summaryLines = getSectionLinesByKeywords(sections, ["summary"]);
+  const summarySection = summaryLines
+    ?.flat()
+    .map((textItem) => textItem.text)
+    .join(" ");
+
+  const objectiveLines = getSectionLinesByKeywords(sections, ["objective"]);
+  const objectiveSection = objectiveLines
+    ?.flat()
+    .map((textItem) => textItem.text)
+    .join(" ");
+
+    return {
+      profile: {
+        name, 
+        email, 
+        phone, 
+        location, 
+        url,
+        summary: summarySection || objectiveSection ||summary, 
+      },
+      profileScores: {
+        name: nameScores,
+        email: emailScores,
+        phone: phoneScores,
+        location: locationScores,
+        url: urlScores
+      }
+    }
 };
