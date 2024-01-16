@@ -1,5 +1,4 @@
-import { join } from "path";
-import { Lines, TextItem, TextItems } from "../../types";
+import { Lines, TextItem } from "../../types";
 
 export const BULLET_POINTS = [
   "⋅",
@@ -15,17 +14,19 @@ export const BULLET_POINTS = [
 ];
 
 const getFirstBulletPointLineIdx = (lines: Lines): number | undefined => {
-  for (let i = 0; i <= lines.length; i++) {
+  for (let i = 0; i < lines.length; i++) {
     for (let item of lines[i]) {
       if (BULLET_POINTS.some((bullet) => item.text.includes(bullet))) {
         return i;
       }
     }
   }
+
   return undefined;
 };
 
 const isWord = (str: string) => /^[^0-9]+$/.test(str);
+
 const hasAtLeast8Words = (item: TextItem) =>
   item.text.split(/\s/).filter(isWord).length >= 8;
 
@@ -41,6 +42,7 @@ export const getDescriptionsLineIdx = (lines: Lines): number | undefined => {
       }
     }
   }
+
   return idx;
 };
 
