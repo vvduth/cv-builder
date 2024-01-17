@@ -17,7 +17,8 @@
     "pdfjs-dist": "^3.7.107",
     "react": "^18",
     "react-dom": "^18",
-    "react-redux": "^9.0.4"
+    "react-redux": "^9.0.4",
+    "tailwindcss-scrollbar": "^0.1.0"
   },
   "devDependencies": {
     "@types/node": "^20",
