@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getHasedUsedAppBefore } from "../lib/redux/local-storage";
 import Link from "next/link";
+import ResumeDropzone from "../components/ResumeDropzone";
 
 export default function ImportResume() {
   const [hasUsedAppBefore, setHasUsedAppBefore] = useState(false);
@@ -24,7 +25,10 @@ export default function ImportResume() {
             <h1 className="text-lg font-semibold text-gray-900">
               Import data from an existing resume
             </h1>
-            <h2>Resume Drop Zone component</h2>
+            <ResumeDropzone 
+              onFileUrlChange={onFileUrlChange}
+              className="mt-5"
+            />
             {!hasAddedResume && (
               <>
                 <OrDivider />
