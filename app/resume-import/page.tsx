@@ -25,7 +25,7 @@ export default function ImportResume() {
             <h1 className="text-lg font-semibold text-gray-900">
               Import data from an existing resume
             </h1>
-            <ResumeDropzone 
+            <ResumeDropzone
               onFileUrlChange={onFileUrlChange}
               className="mt-5"
             />
@@ -53,7 +53,10 @@ export default function ImportResume() {
             <h1 className="font-semibold text-gray-900">
               Override data with a new resume
             </h1>
-            <h2>Resume drop zone component</h2>
+            <ResumeDropzone
+              onFileUrlChange={onFileUrlChange}
+              className="mt-5"
+            />
           </>
         )}
       </div>
@@ -63,14 +66,11 @@ export default function ImportResume() {
 
 const OrDivider = () => (
   <div className="mx-[-2.5rem] flex items-center pb-6 pt-8" aria-hidden="true">
-    <div className="flex-grow border-t border-gray-200">
-      <span className="mx-2 mt-[-2px] flex-shrink text-lg text-gray-400">
-        or
-      </span>
-    </div>
+    <div className="flex-grow border-t border-gray-200" />
+    <span className="mx-2 mt-[-2px] flex-shrink text-lg text-gray-400">or</span>
+    <div className="flex-grow border-t border-gray-200" />
   </div>
 );
-
 const SectionWithHeadingAndCreateButton = ({
   heading,
   buttonText,
