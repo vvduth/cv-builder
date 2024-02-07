@@ -4,6 +4,7 @@ import {
   A4_WIDTH_PX,
   LETTER_HEIGHT_PX,
   LETTER_WIDTH_PT,
+  LETTER_WIDTH_PX,
 } from "@/app/lib/constants";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
@@ -13,15 +14,15 @@ const getIFrameInitialContent = (isA4: boolean) => {
   const width = isA4 ? A4_WIDTH_PT : LETTER_WIDTH_PT;
 
   return `<!DOCTYPE html>
-      <html>
-          <head>
-              <style>
-              </style>
-          </head>
-          <body style='overlfow: hidden; width: ${width}pt; margin:0;padding:0; -webkit-text-size-adjust:none;'>
-              <div></div>
-          </body>
-      <html>`;
+    <html>
+        <head>
+            <style>
+            </style>
+        </head>
+        <body style='overlfow: hidden; width: ${width}pt; margin:0;padding:0; -webkit-text-size-adjust:none;'>
+            <div></div>
+        </body>
+    <html>`;
 };
 
 const ResumeIFrame = ({
@@ -32,7 +33,7 @@ const ResumeIFrame = ({
 }: {
   documentSize: string;
   scale: number;
-  children?: React.ReactNode;
+  children: React.ReactNode;
   enablePDFViewer?: boolean;
 }) => {
   const isA4 = documentSize === "A4";
@@ -45,7 +46,7 @@ const ResumeIFrame = ({
     return <></>;
   }
 
-  const width = isA4 ? A4_WIDTH_PX : LETTER_HEIGHT_PX;
+  const width = isA4 ? A4_WIDTH_PX : LETTER_WIDTH_PX;
   const height = isA4 ? A4_HEIGHT_PX : LETTER_HEIGHT_PX;
 
   return (
@@ -65,7 +66,7 @@ const ResumeIFrame = ({
       >
         <Frame
           initialContent={iframeInitialContent}
-          style={{ width: "100%", height: "100%%" }}
+          style={{ width: "100%", height: "100%" }}
           key={isA4 ? "A4" : "LETTER"}
         >
           {children}
@@ -76,6 +77,5 @@ const ResumeIFrame = ({
 };
 
 export const ResumeIFrameCSR = dynamic(() => Promise.resolve(ResumeIFrame), {
-    ssr: false,
-})
-
+  ssr: false,
+});
