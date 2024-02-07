@@ -101,3 +101,35 @@ export const ResumePDFLink = ({
     </a>
   );
 };
+
+export const ResumePDFBulletList = ({
+  items,
+  showBulletPoints,
+}: {
+  items: string[];
+  showBulletPoints?: boolean;
+}) => {
+  return (
+    <>
+      {items.map((item, idx) => (
+        <View style={{ ...styles.flexRow }} key={idx}>
+          {showBulletPoints && (
+            <ResumePDFText
+              style={{
+                paddingLeft: spacing["2"],
+                paddingRight: spacing["2"],
+                lineHeight: "1.3",
+              }}
+              bold={true}
+            >
+              {"."}
+            </ResumePDFText>
+          )}
+          <ResumePDFText style={{lineHeight: "1.3", flexGrow: 1, flexBasis: 0}}>
+            {item}
+          </ResumePDFText>
+        </View>
+      ))}
+    </>
+  );
+};

@@ -3,6 +3,8 @@ import { Resume } from "@/app/lib/redux/types";
 import { Document, Page, View } from "@react-pdf/renderer";
 import { styles, spacing } from "./styles";
 import { ResumePDFProfile } from "./ResumePDFProfile";
+import { ShowForm } from "@/app/lib/redux/settingsSlice";
+import ResumePDFWorkExperience from "./ResumePDFWorkExperience";
 
 export const ResumePDF = ({
   resume,
@@ -13,10 +15,30 @@ export const ResumePDF = ({
   settings: Settings;
   isPDF: boolean;
 }) => {
-  const { profile } = resume;
+  const { profile, workExperiences } = resume;
   const { name } = profile;
 
-  const { documentSize, fontFamily, fontSize, themeColor } = settings;
+  const { documentSize, fontFamily, fontSize, themeColor, formToHeading, formsOrder, formToShow } =
+    settings;
+
+  const showFormOrder = formsOrder.filter((form ) => formToShow[form])
+
+
+
+  const formTypeComponent: { [type in ShowForm]: () => JSX.Element } = {
+    workExperiences: () => (
+      <ResumePDFWorkExperience
+        heading={formToHeading["workExperiences"]}
+        workExperiences={workExperiences}
+        themeColor={themeColor}
+      />
+    ),
+    educations: () => (<></>),
+    projects: () => (<></>),
+    skills: () => (<></>),
+    custom: () =>(<></>)
+  };
+
   return (
     <>
       <Document title={`${name}`} author={name} producer={"Inhouse"}>
@@ -49,6 +71,10 @@ export const ResumePDF = ({
               themeColor={themeColor}
               isPDF={isPDF}
             />
+            {showFormOrder.map((form) => {
+              const Component = formTypeComponent[form]
+              return <Component key={form}  />
+            })}
           </View>
         </Page>
       </Document>
