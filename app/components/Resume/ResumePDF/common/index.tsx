@@ -2,6 +2,7 @@ import type { Style } from "@react-pdf/types";
 import { View, Text } from "@react-pdf/renderer";
 import { styles, spacing } from "../styles";
 import { DEFAULT_FONT_COLOR } from "@/app/lib/redux/settingsSlice";
+import { Link } from "@react-pdf/renderer";
 
 export const ResumePDFSection = ({
   themeColor,
@@ -35,12 +36,12 @@ export const ResumePDFSection = ({
           />
         )}
         <Text
-         style={{
-            fontWeight: "bold", 
-            letterSpacing: "0.3pt"
-         }}
+          style={{
+            fontWeight: "bold",
+            letterSpacing: "0.3pt",
+          }}
         >
-            {heading}
+          {heading}
         </Text>
       </View>
     )}
@@ -49,25 +50,54 @@ export const ResumePDFSection = ({
 );
 
 export const ResumePDFText = ({
-    bold= false, 
-    themeColor,
-    style={}, children
+  bold = false,
+  themeColor,
+  style = {},
+  children,
 }: {
-    bold?: boolean;
-    themeColor?: string, 
-    style? : Style,
-    children: React.ReactNode
+  bold?: boolean;
+  themeColor?: string;
+  style?: Style;
+  children: React.ReactNode;
 }) => {
+  return (
+    <Text
+      style={{
+        color: themeColor || DEFAULT_FONT_COLOR,
+        fontWeight: bold ? "bold" : "normal",
+        ...style,
+      }}
+    >
+      {children}
+    </Text>
+  );
+};
 
+export const ResumePDFLink = ({
+  src,
+  isPDF,
+  children,
+}: {
+  src: string;
+  isPDF: boolean;
+  children: React.ReactNode;
+}) => {
+  if (isPDF) {
     return (
-        <Text 
-            style={{
-                color: themeColor || DEFAULT_FONT_COLOR,
-                fontWeight: bold ? "bold" : "normal",
-                ...styles
-            }}
-        >
-            {children}
-        </Text>
-    )
-}
+      <Link src={src} style={{ textDecoration: "none" }}>
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      href={src}
+      style={{ textDecoration: "none" }}
+      target="_blank"
+      rel="noreferrer"
+    >
+      {children}
+    </a>
+  );
+};

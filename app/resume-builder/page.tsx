@@ -15,7 +15,6 @@ export default function Create() {
                         <ResumeForm />
                     </div>
                     <div className="col-span-3">
-                        <h1 >Live Preview of our edits in resume sheet</h1>
                         <Resume />
                     </div>
                 </div>
