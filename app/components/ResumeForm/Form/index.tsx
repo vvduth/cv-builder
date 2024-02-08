@@ -15,6 +15,7 @@ import {
   LightBulbIcon,
   WrenchIcon,
 } from "@heroicons/react/24/outline";
+import { MoveIconButton } from "./IconButton";
 
 const FORM_TO_ICON: { [section in ShowForm]: typeof BuildingOfficeIcon } = {
   workExperiences: BuildingOfficeIcon,
@@ -90,8 +91,14 @@ export const Form = ({
         </div>
         <div className="flex items-center gap-0.5">
           {!isFirstForm && (
-            <></>
+            <MoveIconButton
+              type="up" onClick={handleMoveClick}
+            />
           )}
+          {!isLastFrom && (
+            <MoveIconButton type="down" onClick={handleMoveClick} />
+          )}
+          
         </div>
       </div>
     </BaseForm>
