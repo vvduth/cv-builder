@@ -15,7 +15,14 @@ import {
   LightBulbIcon,
   WrenchIcon,
 } from "@heroicons/react/24/outline";
-import { MoveIconButton } from "./IconButton";
+import { DeleteIconButton, MoveIconButton, ShowIconButton } from "./IconButton";
+import ExpanderWithHeightTransition from "../../ExpanderWithHeightTransition";
+import {
+  addSectionInForm,
+  deleteSectionInFormByIdx,
+  moveSectionInForm,
+} from "@/app/lib/redux/resumeSlice";
+import { PlusSmallIcon } from "@heroicons/react/24/outline";
 
 const FORM_TO_ICON: { [section in ShowForm]: typeof BuildingOfficeIcon } = {
   workExperiences: BuildingOfficeIcon,
@@ -91,16 +98,104 @@ export const Form = ({
         </div>
         <div className="flex items-center gap-0.5">
           {!isFirstForm && (
-            <MoveIconButton
-              type="up" onClick={handleMoveClick}
-            />
+            <MoveIconButton type="up" onClick={handleMoveClick} />
           )}
           {!isLastFrom && (
             <MoveIconButton type="down" onClick={handleMoveClick} />
           )}
-          
+          <ShowIconButton show={showForm} setShow={setShowForm} />
         </div>
       </div>
+      <ExpanderWithHeightTransition expanded={showForm}>
+        {children}
+      </ExpanderWithHeightTransition>
+      {showForm && addButtonText && (
+        <div className="mt-2 flex justify-end">
+          <button
+            type="button"
+            onClick={() => {
+              dispatch(addSectionInForm({ form }));
+            }}
+            className="flex items-center rounded-md bg-white py-2 pl-3 pr-4 text-sm font-semibold text-gray-9020 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+          >
+            <PlusSmallIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" />
+            {addButtonText}
+          </button>
+        </div>
+      )}
     </BaseForm>
+  );
+};
+
+export const FormSection = ({
+  form,
+  idx,
+  showDelete,
+  showMoveDown,
+  showMoveUp,
+  deleteButtonTooltipText,
+  children,
+}: {
+  form: ShowForm;
+  idx: number;
+  showMoveUp: boolean;
+  showMoveDown: boolean;
+  showDelete: boolean;
+  deleteButtonTooltipText: string;
+  children: React.ReactNode;
+}) => {
+  const dispatch = useAppDispatch();
+
+  const handleDeleteClick = () => {
+    dispatch(deleteSectionInFormByIdx({ form, idx }));
+  };
+
+  const handleMoveClick = (direction: "up" | "down") => {
+    dispatch(moveSectionInForm({ form, direction, idx }));
+  };
+
+  return (
+    <>
+      {idx !== 0 && (
+        <div className="mb-4 mt-6 border-t-2 border-dotted border-gray-200" />
+      )}
+      <div className="relative grid grid-cols-6 gap-3">
+        {children}
+        <div className={`absolute right-0 top-0 flex gap-0.5`}>
+          <div
+            className={`transititon-all duration-300 ${
+              showMoveUp ? "" : "invisible opacity-0"
+            } ${showMoveDown ? "" : "-mr-6"}`}
+          >
+            <MoveIconButton
+              type="up"
+              size="small"
+              onClick={() => handleMoveClick("up")}
+            />
+          </div>
+          <div
+            className={`transititon-all duration-300 ${
+              showDelete ? "" : "invisible opacity-0"
+            }`}
+          >
+            <MoveIconButton
+              type="down"
+              size="small"
+              onClick={() => handleMoveClick("down")}
+            />
+          </div>
+          <div
+            className={`transititon-all duration-300 ${
+              showDelete ? "" : "invisible opacity-0"
+            }`}
+          >
+            <DeleteIconButton
+              onClick={handleDeleteClick}
+              tooltipText={deleteButtonTooltipText}
+            />
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
