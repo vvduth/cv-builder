@@ -1,3 +1,5 @@
+import ContentEditable from "react-contenteditable";
+
 interface InputProps<K extends string, V extends string | string[]> {
   label: string;
   labelClassName?: string;
@@ -45,3 +47,62 @@ export const Input = <K extends string>({
     />
   </InputGroupWrapper>
 );
+
+export const BulletListTextArea = <T extends string>({
+  label,
+  labelClassName: wrapperClassName,
+  name,
+  value: bulletListStrings = [],
+  placeholder,
+  onChange,
+  showBulletPoints = true,
+}: InputProps<T, string[]> & {
+  showBulletPoints?: boolean;
+}) => {
+  const html = getHTMLFromBulletListStrings(bulletListStrings);
+
+  return (
+    <InputGroupWrapper label={label} 
+      className={wrapperClassName}
+    >
+      <ContentEditable 
+      contentEditable={true}
+       className={`${INPUT_CLASS_NAME} cursor-text [&>div]:list-item ${showBulletPoints ? "pl-7" : "[&>div]:list-['']"}`}
+       //placeholder={placeholder}
+        onChange={(e) => {
+          if (e.type ==="input") {
+            const {innerText} = e.currentTarget as HTMLDivElement;
+            const newBulletListStrings = getBulletListStringsFormInnerText(innerText)
+            onChange(name, newBulletListStrings)
+          }
+        }}
+        html={html}
+       />
+    </InputGroupWrapper>
+  )
+};
+
+const NORMALIZE_LINE_BREAK = "\n"
+const normalizeLineBreak = (str: string) => str.replace(/\r?\n/g,NORMALIZE_LINE_BREAK)
+const dedupeLineBreak = (str: string) => str.replace(/\n\n/g,NORMALIZE_LINE_BREAK);
+const getStringsByLineBreak = (str: string) => str.split(NORMALIZE_LINE_BREAK);
+
+const getBulletListStringsFormInnerText = (innerText: string) => {
+  const innerTextWithNormalizedLineBreak = normalizeLineBreak(innerText);
+
+  let newInnerText = dedupeLineBreak(innerTextWithNormalizedLineBreak);
+
+  if (newInnerText === NORMALIZE_LINE_BREAK) {
+    newInnerText = ""
+  }
+  
+  return(getStringsByLineBreak(newInnerText))
+}
+
+const getHTMLFromBulletListStrings = (bulletListString: string[]) => {
+  if (bulletListString.length === 0) {
+    return "<div></div>";
+  }
+
+  return bulletListString.map((text) => `<div>${text}</div>`).join("");
+};

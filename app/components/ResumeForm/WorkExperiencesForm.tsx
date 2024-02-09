@@ -7,7 +7,7 @@ import React from "react";
 import { Form, FormSection } from "./Form";
 import { CreatehandleChangeArgsWithDescriptions } from "./types";
 import { ResumeWorkExperience } from "@/app/lib/redux/types";
-import { Input } from "./Form/InputGroup";
+import { BulletListTextArea, Input } from "./Form/InputGroup";
 
 const WorkExperiencesForm = () => {
   const workExperiences = useAppSelector(selectWorkExperiences);
@@ -48,6 +48,30 @@ const WorkExperiencesForm = () => {
                   name="company"
                   placeholder="XYZ comaony"
                   value={company}
+                  onChange={handleWorkExperienceChange}
+                />
+                <Input
+                  label="Job Title"
+                  labelClassName="col-span-4"
+                  name="jobTitle"
+                  placeholder="Software Developer"
+                  value={jobTitle}
+                  onChange={handleWorkExperienceChange}
+                />
+                <Input
+                  label="Date"
+                  labelClassName="col-span-2"
+                  name="date"
+                  placeholder="Jan 2022 - Present"
+                  value={date}
+                  onChange={handleWorkExperienceChange}
+                />
+                <BulletListTextArea
+                  label="Description"
+                  labelClassName="col-span-full"
+                  name="descriptions"
+                  placeholder="Bullet points"
+                  value={descriptions}
                   onChange={handleWorkExperienceChange}
                 />
               </FormSection>
