@@ -5,6 +5,8 @@ import { styles, spacing } from "./styles";
 import { ResumePDFProfile } from "./ResumePDFProfile";
 import { ShowForm } from "@/app/lib/redux/settingsSlice";
 import ResumePDFWorkExperience from "./ResumePDFWorkExperience";
+import ResumePDFEducation from "./ResumePDFEducation";
+import { ShowIconButton } from "../../ResumeForm/Form/IconButton";
 
 export const ResumePDF = ({
   resume,
@@ -15,15 +17,21 @@ export const ResumePDF = ({
   settings: Settings;
   isPDF: boolean;
 }) => {
-  const { profile, workExperiences } = resume;
+  const { profile, workExperiences, educations } = resume;
   const { name } = profile;
 
-  const { documentSize, fontFamily, fontSize, themeColor, formToHeading, formsOrder, formToShow } =
-    settings;
+  const {
+    documentSize,
+    fontFamily,
+    fontSize,
+    themeColor,
+    formToHeading,
+    formsOrder,
+    formToShow,
+    showBulletPoints,
+  } = settings;
 
-  const showFormOrder = formsOrder.filter((form ) => formToShow[form])
-
-
+  const showFormOrder = formsOrder.filter((form) => formToShow[form]);
 
   const formTypeComponent: { [type in ShowForm]: () => JSX.Element } = {
     workExperiences: () => (
@@ -33,10 +41,17 @@ export const ResumePDF = ({
         themeColor={themeColor}
       />
     ),
-    educations: () => (<></>),
-    projects: () => (<></>),
-    skills: () => (<></>),
-    custom: () =>(<></>)
+    educations: () => (
+      <ResumePDFEducation
+        heading={formToHeading["educations"]}
+        educations={educations}
+        themeColor={themeColor}
+        showBulletPoints={showBulletPoints["educations"]}
+      />
+    ),
+    projects: () => <></>,
+    skills: () => <></>,
+    custom: () => <></>,
   };
 
   return (
@@ -72,8 +87,8 @@ export const ResumePDF = ({
               isPDF={isPDF}
             />
             {showFormOrder.map((form) => {
-              const Component = formTypeComponent[form]
-              return <Component key={form}  />
+              const Component = formTypeComponent[form];
+              return <Component key={form} />;
             })}
           </View>
         </Page>

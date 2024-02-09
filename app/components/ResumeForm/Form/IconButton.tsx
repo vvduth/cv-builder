@@ -3,6 +3,7 @@ import {
   EyeSlashIcon,
   EyeIcon,
   TrashIcon,
+  ListBulletIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowSmallUpIcon } from "@heroicons/react/24/outline";
 import React from "react";
@@ -61,6 +62,35 @@ export const MoveIconButton = ({
   return (
     <IconButton onClick={() => onClick(type)} tooltipText={toolTipText}>
       <Icon className={`${sizeClassName} text-gray-400`} aria-hidden="true" />
+      <span className="sr-only">{toolTipText}</span>
+    </IconButton>
+  );
+};
+
+export const BulletListiconButton = ({
+  onClick,
+  showBulletPoints,
+}: {
+  onClick: (newShowBulletPoints: boolean) => void;
+  showBulletPoints: boolean;
+}) => {
+  const toolTipText = showBulletPoints
+    ? "Hide bullet points"
+    : "Show bullet points";
+
+  return (
+    <IconButton
+      onClick={() => onClick(showBulletPoints)}
+      tooltipText={toolTipText}
+      size="small"
+      className={showBulletPoints ? "!bg-sky-100" : ""}
+    >
+      <ListBulletIcon
+        className={`h-4 w-4 ${
+          showBulletPoints ? "text-gray-700" : "text-gray-400"
+        }`}
+        aria-hidden="true"
+      />
       <span className="sr-only">{toolTipText}</span>
     </IconButton>
   );
