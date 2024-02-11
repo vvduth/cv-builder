@@ -7,6 +7,7 @@ import { ShowForm } from "@/app/lib/redux/settingsSlice";
 import ResumePDFWorkExperience from "./ResumePDFWorkExperience";
 import ResumePDFEducation from "./ResumePDFEducation";
 import { ShowIconButton } from "../../ResumeForm/Form/IconButton";
+import { ResumePDFProject } from "./ResumePDFProject";
 
 export const ResumePDF = ({
   resume,
@@ -17,7 +18,7 @@ export const ResumePDF = ({
   settings: Settings;
   isPDF: boolean;
 }) => {
-  const { profile, workExperiences, educations } = resume;
+  const { profile, workExperiences, educations, projects } = resume;
   const { name } = profile;
 
   const {
@@ -49,7 +50,13 @@ export const ResumePDF = ({
         showBulletPoints={showBulletPoints["educations"]}
       />
     ),
-    projects: () => <></>,
+    projects: () => (
+      <ResumePDFProject
+        heading={formToHeading["projects"]}
+        projects={projects}
+        themeColor={themeColor}
+      />
+    ),
     skills: () => <></>,
     custom: () => <></>,
   };
