@@ -8,6 +8,7 @@ import ResumePDFWorkExperience from "./ResumePDFWorkExperience";
 import ResumePDFEducation from "./ResumePDFEducation";
 import { ShowIconButton } from "../../ResumeForm/Form/IconButton";
 import { ResumePDFProject } from "./ResumePDFProject";
+import ResumePDFSkills from "./ResumePDFSkills";
 
 export const ResumePDF = ({
   resume,
@@ -18,7 +19,7 @@ export const ResumePDF = ({
   settings: Settings;
   isPDF: boolean;
 }) => {
-  const { profile, workExperiences, educations, projects } = resume;
+  const { profile, workExperiences, educations, projects, skills } = resume;
   const { name } = profile;
 
   const {
@@ -29,7 +30,7 @@ export const ResumePDF = ({
     formToHeading,
     formsOrder,
     formToShow,
-    showBulletPoints,
+    showBulletPoints
   } = settings;
 
   const showFormOrder = formsOrder.filter((form) => formToShow[form]);
@@ -57,7 +58,14 @@ export const ResumePDF = ({
         themeColor={themeColor}
       />
     ),
-    skills: () => <></>,
+    skills: () => (
+      <ResumePDFSkills
+        heading={formToHeading["skills"]}
+        skills={skills}
+        themeColor={themeColor}
+        showBulletPoints={showBulletPoints["skills"]}
+      />
+    ),
     custom: () => <></>,
   };
 
