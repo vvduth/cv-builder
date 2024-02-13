@@ -23,14 +23,9 @@ const ResumePDFSkills = ({
   const { featuredSkills, descriptions } = skills;
   const featuredSkillsWithtText = featuredSkills.filter((item) => item.skill);
   const featuredSkillsPair = [
-    [
-      featuredSkillsWithtText[0],
-      featuredSkillsWithtText[3],
-      featuredSkillsWithtText[1],
-      featuredSkillsWithtText[4],
-      featuredSkillsWithtText[2],
-      featuredSkillsWithtText[5],
-    ],
+    [featuredSkillsWithtText[0], featuredSkillsWithtText[3]],
+    [featuredSkillsWithtText[1], featuredSkillsWithtText[4]],
+    [featuredSkillsWithtText[2], featuredSkillsWithtText[5]],
   ];
   return (
     <ResumePDFSection themeColor={themeColor} heading={heading}>
@@ -51,7 +46,9 @@ const ResumePDFSkills = ({
                     skill={featuredSkill.skill}
                     rating={featuredSkill.rating}
                     themeColor={themeColor}
-                    style={{ justifyContent: "flex-end" }}
+                    style={{
+                      justifyContent: "flex-end",
+                    }}
                   />
                 );
               })}
@@ -59,6 +56,12 @@ const ResumePDFSkills = ({
           ))}
         </View>
       )}
+      <View style={{ ...styles.flexCol }}>
+        <ResumePDFBulletList
+          items={descriptions}
+          showBulletPoints={showBulletPoints}
+        />
+      </View>
     </ResumePDFSection>
   );
 };

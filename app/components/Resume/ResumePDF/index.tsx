@@ -4,22 +4,24 @@ import { Document, Page, View } from "@react-pdf/renderer";
 import { styles, spacing } from "./styles";
 import { ResumePDFProfile } from "./ResumePDFProfile";
 import { ShowForm } from "@/app/lib/redux/settingsSlice";
-import ResumePDFWorkExperience from "./ResumePDFWorkExperience";
-import ResumePDFEducation from "./ResumePDFEducation";
-import { ShowIconButton } from "../../ResumeForm/Form/IconButton";
+
 import { ResumePDFProject } from "./ResumePDFProject";
+import ResumePDFEducation from "./ResumePDFEducation";
 import ResumePDFSkills from "./ResumePDFSkills";
+import ResumePDFWorkExperience from "./ResumePDFWorkExperience";
+import { ResumePDFCustom } from "./ResumePDFCustom";
 
 export const ResumePDF = ({
   resume,
   settings,
-  isPDF,
+  isPDF = false,
 }: {
   resume: Resume;
   settings: Settings;
-  isPDF: boolean;
+  isPDF?: boolean;
 }) => {
-  const { profile, workExperiences, educations, projects, skills } = resume;
+  const { profile, workExperiences, educations, projects, skills, custom } =
+    resume;
   const { name } = profile;
 
   const {
@@ -30,12 +32,12 @@ export const ResumePDF = ({
     formToHeading,
     formsOrder,
     formToShow,
-    showBulletPoints
+    showBulletPoints,
   } = settings;
 
-  const showFormOrder = formsOrder.filter((form) => formToShow[form]);
+  const showFormsOrder = formsOrder.filter((form) => formToShow[form]);
 
-  const formTypeComponent: { [type in ShowForm]: () => JSX.Element } = {
+  const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
     workExperiences: () => (
       <ResumePDFWorkExperience
         heading={formToHeading["workExperiences"]}
@@ -66,12 +68,19 @@ export const ResumePDF = ({
         showBulletPoints={showBulletPoints["skills"]}
       />
     ),
-    custom: () => <></>,
+    custom: () => (
+      <ResumePDFCustom
+        heading={formToHeading["custom"]}
+        custom={custom}
+        themeColor={themeColor}
+        showBulletPoints={showBulletPoints["custom"]}
+      />
+    ),
   };
 
   return (
     <>
-      <Document title={`${name}`} author={name} producer={"Inhouse"}>
+      <Document title={`${name} Resume`} author={name} producer={"Inhouse"}>
         <Page
           size={documentSize === "A4" ? "A4" : "LETTER"}
           style={{
@@ -101,8 +110,8 @@ export const ResumePDF = ({
               themeColor={themeColor}
               isPDF={isPDF}
             />
-            {showFormOrder.map((form) => {
-              const Component = formTypeComponent[form];
+            {showFormsOrder.map((form) => {
+              const Component = formTypeToComponent[form];
               return <Component key={form} />;
             })}
           </View>
