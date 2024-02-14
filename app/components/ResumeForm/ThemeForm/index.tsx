@@ -9,6 +9,7 @@ import { BaseForm } from "../Form";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { InlineInput } from "./InlineInput";
 import { THEME_COLORS } from "./constants";
+import { InputGroupWrapper } from "../Form/InputGroup";
 
 export const ThemeForm = () => {
   const settings = useAppSelector(selectSettings);
@@ -60,6 +61,12 @@ export const ThemeForm = () => {
               </div>
             ))}
           </div>
+        </div>
+        <div>
+          <InputGroupWrapper 
+            label="Font Family"
+            />
+            
         </div>
       </div>
     </BaseForm>
