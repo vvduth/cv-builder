@@ -10,6 +10,8 @@ import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { InlineInput } from "./InlineInput";
 import { THEME_COLORS } from "./constants";
 import { InputGroupWrapper } from "../Form/InputGroup";
+import { FontFamilySelectionCSR, FontSizeSelects } from "./Selection";
+import { FontFamily } from "../../fonts/constants";
 
 export const ThemeForm = () => {
   const settings = useAppSelector(selectSettings);
@@ -63,10 +65,32 @@ export const ThemeForm = () => {
           </div>
         </div>
         <div>
-          <InputGroupWrapper 
-            label="Font Family"
-            />
-            
+          <InputGroupWrapper label="Font Family" />
+
+          <FontFamilySelectionCSR
+            selectedFontFamily={fontFamily}
+            themeColor={themeColor}
+            handleSettingsChange={handleSettingsChange}
+          />
+        </div>
+        <div>
+          <InlineInput
+            label="Font Size (pt)"
+            name="fontSize"
+            value={fontSize}
+            placeholder="11"
+            onChange={handleSettingsChange}
+          />
+          <FontSizeSelects 
+            fontFamily={fontFamily  as FontFamily}
+            themeColor={themeColor}
+            selectedFontSize={fontSize}
+            handleSettingsChange={handleSettingsChange}
+          />
+        </div>
+        <div>
+          <InputGroupWrapper label="Document Size" />
+          
         </div>
       </div>
     </BaseForm>
