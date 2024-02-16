@@ -8,11 +8,16 @@ import FlexboxSpacer from "../FlexboxSpacer";
 import { ResumeIFrameCSR } from "./ResumeIFrame";
 import { ResumePDFProfile } from "./ResumePDF/ResumePDFProfile";
 import { ResumePDF } from "./ResumePDF";
+import { useRegisterReactPDFFont, useRegisterReactPDFHypernationCallback } from "../fonts/hooks";
+import { ResumeControlBarCSR } from "./ResumeControlBar";
 
 export const Resume = () => {
   const [scale, setScale] = useState(0.8);
   const resume = useAppSelector(selectResume);
   const settings = useAppSelector(selectSettings);
+
+  useRegisterReactPDFFont();
+  useRegisterReactPDFHypernationCallback(settings.fontFamily);
 
   return (
     <>
@@ -28,6 +33,9 @@ export const Resume = () => {
               <ResumePDF resume={resume} settings={settings} isPDF={false} />
             </ResumeIFrameCSR>
           </section>
+          <ResumeControlBarCSR scale={scale} setScale={setScale} 
+          documentSize={settings.documentSize} 
+          document={<></>} fileName={resume.profile.name + " - Resume"} />
         </div>
       </div>
     </>

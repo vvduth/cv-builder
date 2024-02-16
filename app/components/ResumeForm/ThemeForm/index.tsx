@@ -10,7 +10,7 @@ import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { InlineInput } from "./InlineInput";
 import { THEME_COLORS } from "./constants";
 import { InputGroupWrapper } from "../Form/InputGroup";
-import { FontFamilySelectionCSR, FontSizeSelects } from "./Selection";
+import { DocumentSizeSelections, FontFamilySelectionCSR, FontSizeSelects } from "./Selection";
 import { FontFamily } from "../../fonts/constants";
 
 export const ThemeForm = () => {
@@ -90,7 +90,10 @@ export const ThemeForm = () => {
         </div>
         <div>
           <InputGroupWrapper label="Document Size" />
-          
+          <DocumentSizeSelections
+           themeColor={themeColor}
+           selectedDocumentSize={documentSize}
+           handleSettingsChange={handleSettingsChange} />
         </div>
       </div>
     </BaseForm>

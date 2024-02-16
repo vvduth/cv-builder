@@ -1,12 +1,13 @@
 import { GeneralSetting } from "@/app/lib/redux/settingsSlice";
 import {
+    FONT_FAMILY_TO_DISPLAY_NAME,
   FONT_FAMILY_TO_STANDARD_SIZE_IN_PT,
   getAllFontFamiliesToLoad,
 } from "../../fonts/constants";
 import { PX_PER_PT } from "@/app/lib/constants";
 import dynamic from "next/dynamic";
 
-const SelectionCompoent = ({
+const SelectionComponent = ({
   selectedColor,
   isSelected,
   style = {},
@@ -46,38 +47,39 @@ const SelectionsWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 const FontFamilySelections = ({
-  selectedFontFamily,
-  themeColor,
-  handleSettingsChange,
-}: {
-  selectedFontFamily: string;
-  themeColor: string;
-  handleSettingsChange: (field: GeneralSetting, value: string) => void;
-}) => {
-  const allFontFamilies = getAllFontFamiliesToLoad();
-  return (
-    <SelectionsWrapper>
-      {allFontFamilies.map((fontFamily, idx) => {
-        const isSelected = selectedFontFamily === fontFamily;
-        const standardSizePt = FONT_FAMILY_TO_STANDARD_SIZE_IN_PT[fontFamily];
-        return (
-          <SelectionCompoent
-            key={idx}
-            selectedColor={themeColor}
-            isSelected={isSelected}
-            style={{
-              fontFamily,
-              fontSize: `${standardSizePt * PX_PER_PT}px`,
-            }}
-            onClick={() => handleSettingsChange("fontFamily", fontFamily)}
-          >
-            {FONT_FAMILY_TO_STANDARD_SIZE_IN_PT[fontFamily]}
-          </SelectionCompoent>
-        );
-      })}
-    </SelectionsWrapper>
-  );
-};
+    selectedFontFamily,
+    themeColor,
+    handleSettingsChange,
+  }: {
+    selectedFontFamily: string;
+    themeColor: string;
+    handleSettingsChange: (field: GeneralSetting, value: string) => void;
+  }) => {
+    const allFontFamilies = getAllFontFamiliesToLoad();
+    return (
+      <SelectionsWrapper>
+        {allFontFamilies.map((fontFamily, idx) => {
+          const isSelected = selectedFontFamily === fontFamily;
+          const standardSizePt = FONT_FAMILY_TO_STANDARD_SIZE_IN_PT[fontFamily];
+  
+          return (
+            <SelectionComponent
+              key={idx}
+              selectedColor={themeColor}
+              isSelected={isSelected}
+              style={{
+                fontFamily,
+                fontSize: `${standardSizePt * PX_PER_PT}px`,
+              }}
+              onClick={() => handleSettingsChange("fontFamily", fontFamily)}
+            >
+              {FONT_FAMILY_TO_DISPLAY_NAME[fontFamily]}
+            </SelectionComponent>
+          );
+        })}
+      </SelectionsWrapper>
+    );
+}
 
 export const FontFamilySelectionCSR = dynamic(
   () => Promise.resolve(FontFamilySelections),
@@ -107,7 +109,7 @@ export const FontSizeSelects = ({
         const isSelected = fontSizePt === selectedFontSize;
 
         return (
-          <SelectionCompoent
+          <SelectionComponent
             key={idx}
             selectedColor={themeColor}
             isSelected={isSelected}
@@ -118,7 +120,7 @@ export const FontSizeSelects = ({
             onClick={() => handleSettingsChange("fontSize", fontSizePt)}
           >
             {type}
-          </SelectionCompoent>
+          </SelectionComponent>
         );
       })}
     </SelectionsWrapper>
@@ -142,7 +144,7 @@ export const DocumentSizeSelections = ({
         {["Letter", "A4"].map((type, idx) => {
           
           return (
-            <SelectionCompoent
+            <SelectionComponent
               key={idx}
               selectedColor={themeColor}
               isSelected={type === selectedDocumentSize}
@@ -151,10 +153,10 @@ export const DocumentSizeSelections = ({
               <div className="flex flex-col items-center">
                 <div >{type}</div>
                 <div className="text-xs">
-                    {type === "Letter" ? "(US, Canada)" : "(India, Other Countries)"}
+                    {type === "Letter" ? "(US, Canada)" : "(Finland, Other Countries)"}
                 </div>
               </div>
-            </SelectionCompoent>
+            </SelectionComponent>
           );
         })}
       </SelectionsWrapper>
