@@ -9,7 +9,6 @@ import { useSetDefaultScale } from "./hooks";
 import { usePDF } from "@react-pdf/renderer";
 import { useEffect } from "react";
 
-
 const ResumeControlBar = ({
   scale,
   setScale,
@@ -77,4 +76,3 @@ export const ResumeControlBarCSR = dynamic(
     ssr: false,
   }
 );
-
