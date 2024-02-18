@@ -3,18 +3,25 @@
 import { useAppSelector } from "@/app/lib/redux/hooks";
 import { selectResume } from "@/app/lib/redux/resumeSlice";
 import { selectSettings } from "@/app/lib/redux/settingsSlice";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import FlexboxSpacer from "../FlexboxSpacer";
 import { ResumeIFrameCSR } from "./ResumeIFrame";
 import { ResumePDFProfile } from "./ResumePDF/ResumePDFProfile";
 import { ResumePDF } from "./ResumePDF";
-import { useRegisterReactPDFFont, useRegisterReactPDFHypernationCallback } from "../fonts/hooks";
+import {
+  useRegisterReactPDFFont,
+  useRegisterReactPDFHypernationCallback,
+} from "../fonts/hooks";
 import { ResumeControlBarCSR } from "./ResumeControlBar";
 
 export const Resume = () => {
   const [scale, setScale] = useState(0.8);
   const resume = useAppSelector(selectResume);
   const settings = useAppSelector(selectSettings);
+  const document = useMemo(
+    () => <ResumePDF resume={resume} settings={settings} isPDF={true} />,
+    [resume, settings]
+  );
 
   useRegisterReactPDFFont();
   useRegisterReactPDFHypernationCallback(settings.fontFamily);
@@ -33,9 +40,13 @@ export const Resume = () => {
               <ResumePDF resume={resume} settings={settings} isPDF={false} />
             </ResumeIFrameCSR>
           </section>
-          <ResumeControlBarCSR scale={scale} setScale={setScale} 
-          documentSize={settings.documentSize} 
-          document={<></>} fileName={resume.profile.name + " - Resume"} />
+          <ResumeControlBarCSR
+            scale={scale}
+            setScale={setScale}
+            documentSize={settings.documentSize}
+            document={document}
+            fileName={resume.profile.name + " - Resume"}
+          />
         </div>
       </div>
     </>
