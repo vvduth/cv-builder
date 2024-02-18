@@ -10,6 +10,8 @@ import FlexboxSpacer from "../components/FlexboxSpacer";
 import { Heading } from "../components/documentation/Heading";
 import { Paragraph } from "../components/documentation/Paragraph";
 import { readPdf } from "../lib/parse-resume-from-pdf/read-pdf";
+import { cx } from "../lib/cx";
+import ResumeDropzone from "../components/ResumeDropzone";
 
 const RESUME_EXAMPLE = [
   {
@@ -34,7 +36,6 @@ export default function ResumeParser() {
   const lines = groupTextItemsIntoLines(textItems || []);
   const sections = groupLinesIntoSections(lines);
   const resume = extractResumeFromSections(sections);
-
 
   useEffect(() => {
     async function parse() {
@@ -66,6 +67,50 @@ export default function ResumeParser() {
               ability to parse information froma resume PDF. Click around the
               PDF examples below to observe different parsing results.
             </Paragraph>
+            <div className="mt-3 flex gap-3">
+              {RESUME_EXAMPLE.map((example, idx) => (
+                <article
+                  key={idx}
+                  className={cx(
+                    "flex cursor-pointer rounded-md border-2 px-4 py-3 shadow-sm outline-none hover:bg-gray-50 focus:bg-gray-50",
+                    example.fileUrl === fileUrl
+                      ? "border-blue-400"
+                      : "border-gray-300"
+                  )}
+                  onClick={() => setFileUrl(example.fileUrl)}
+                  onKeyDown={(e) => {
+                    if (["Enter", " "].includes(e.key)) {
+                      setFileUrl(example.fileUrl);
+                    }
+                  }}
+                  tabIndex={0}
+                >
+                  <h1 className="font-semibold">Resume Example {idx + 1}</h1>
+                  <p className="mt-2 text-sm text-gray-500">
+                    {example.description}
+                  </p>
+                </article>
+              ))}
+            </div>
+            <Paragraph>
+              You can also{" "}
+              <span className="font-semibold">add your resume below</span> to
+              access how well your resume would be parsed by similar Application
+              Tracking System (ATS) used in job applications. The more
+              information it can parse out, the better it indicates the resume
+              is well formatted and easy to read.
+            </Paragraph>
+            <div className="mt-3">
+              <ResumeDropzone 
+                onFileUrlChange={(fileUrl) => setFileUrl(fileUrl || defaultFileUrl)}
+                playgroundView={true}
+              />
+            </div>
+            <Heading level={2} className="!mt-[1.2em]" >
+              Resume Parsing Results
+            </Heading>
+                  
+
           </section>
         </div>
       </div>
