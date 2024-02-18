@@ -12,6 +12,7 @@ import { Paragraph } from "../components/documentation/Paragraph";
 import { readPdf } from "../lib/parse-resume-from-pdf/read-pdf";
 import { cx } from "../lib/cx";
 import ResumeDropzone from "../components/ResumeDropzone";
+import ResumeTable from "./ResumeTable";
 
 const RESUME_EXAMPLE = [
   {
@@ -101,16 +102,17 @@ export default function ResumeParser() {
               is well formatted and easy to read.
             </Paragraph>
             <div className="mt-3">
-              <ResumeDropzone 
-                onFileUrlChange={(fileUrl) => setFileUrl(fileUrl || defaultFileUrl)}
+              <ResumeDropzone
+                onFileUrlChange={(fileUrl) =>
+                  setFileUrl(fileUrl || defaultFileUrl)
+                }
                 playgroundView={true}
               />
             </div>
-            <Heading level={2} className="!mt-[1.2em]" >
+            <Heading level={2} className="!mt-[1.2em]">
               Resume Parsing Results
             </Heading>
-                  
-
+            <ResumeTable resume={resume}/>
           </section>
         </div>
       </div>
