@@ -4,11 +4,10 @@ import { Document, Page, View } from "@react-pdf/renderer";
 import { styles, spacing } from "./styles";
 import { ResumePDFProfile } from "./ResumePDFProfile";
 import { ShowForm } from "@/app/lib/redux/settingsSlice";
-
+import { ResumePDFWorkExperience } from "./ResumePDFWorkExperience";
+import { ResumePDFEducation } from "./ResumePDFEducation";
 import { ResumePDFProject } from "./ResumePDFProject";
-import ResumePDFEducation from "./ResumePDFEducation";
-import ResumePDFSkills from "./ResumePDFSkills";
-import ResumePDFWorkExperience from "./ResumePDFWorkExperience";
+import { ResumePDFSkills } from "./ResumePDFSkills";
 import { ResumePDFCustom } from "./ResumePDFCustom";
 
 export const ResumePDF = ({

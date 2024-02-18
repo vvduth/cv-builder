@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { cx } from "../lib/cx";
 import Image from "next/image";
-import addPdfSrc from "@/public/add-pdf.svg";
+import addPdfSrc from "@/public/assets/add-pdf.svg";
 import { LockClosedIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { parseResumeFromPdf } from "../lib/parse-resume-from-pdf";
 import { deepClone } from "../lib/parse-resume-from-pdf/deep-clone";
 import { ShowForm, initialSettings } from "../lib/redux/settingsSlice";
 import {
-  getHasedUsedAppBefore,
+  getHasUsedAppBefore,
   saveStateToLocalStorage,
 } from "../lib/redux/local-storage";
 import { useRouter } from "next/navigation";
+
 const defaultFileState = {
   name: "",
   size: 0,
@@ -22,13 +23,13 @@ const ResumeDropzone = ({
   className,
   playgroundView = false,
 }: {
-  onFileUrlChange: (fileIrl: string) => void;
+  onFileUrlChange: (fileUrl: string) => void;
   className?: string;
   playgroundView?: boolean;
 }) => {
   const [file, setFile] = useState(defaultFileState);
-  const [isHoveredOnDropZone, setIsHoveredOnDropZone] = useState(false);
-  const [hasNotPdfFile, setHasNotPdfFile] = useState(false);
+  const [isHoveredOnDropzone, setIsHoveredOnDropZone] = useState(false);
+  const [hasNonPdfFile, setHasNonPdfFile] = useState(false);
 
   const hasFile = Boolean(file.name);
   const router = useRouter();
@@ -44,14 +45,14 @@ const ResumeDropzone = ({
     onFileUrlChange(fileUrl);
   };
 
-  const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const newFile = e.dataTransfer.files[0];
+  const onDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const newFile = event.dataTransfer.files[0];
     if (newFile.name.endsWith(".pdf")) {
-      setHasNotPdfFile(false);
+      setHasNonPdfFile(false);
       setNewFile(newFile);
     } else {
-      setHasNotPdfFile(true);
+      setHasNonPdfFile(true);
     }
     setIsHoveredOnDropZone(false);
   };
@@ -72,8 +73,7 @@ const ResumeDropzone = ({
   const onImportClick = async () => {
     const resume = await parseResumeFromPdf(file.fileUrl);
     const settings = deepClone(initialSettings);
-
-    if (getHasedUsedAppBefore()) {
+    if (getHasUsedAppBefore()) {
       const sections = Object.keys(settings.formToShow) as ShowForm[];
       const sectionToFormToShow: Record<ShowForm, boolean> = {
         workExperiences: resume.workExperiences.length > 0,
@@ -82,12 +82,10 @@ const ResumeDropzone = ({
         skills: resume.skills.descriptions.length > 0,
         custom: resume.custom.descriptions.length > 0,
       };
-
       for (const section of sections) {
         settings.formToShow[section] = sectionToFormToShow[section];
       }
     }
-
     saveStateToLocalStorage({ resume, settings });
     router.push("/resume-builder");
   };
@@ -96,7 +94,7 @@ const ResumeDropzone = ({
     <div
       className={cx(
         "flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6",
-        isHoveredOnDropZone && "border-sky-400",
+        isHoveredOnDropzone && "border-sky-400",
         playgroundView ? "pb-6 pt-4" : "py-12",
         className
       )}
@@ -169,7 +167,7 @@ const ResumeDropzone = ({
                   onChange={onInputChange}
                 />
               </label>
-              {hasNotPdfFile && (
+              {hasNonPdfFile && (
                 <p className="mt-6 text-red-400">Only pdf file is supported</p>
               )}
             </>
@@ -185,7 +183,8 @@ const ResumeDropzone = ({
                 </button>
               )}
               <p className={cx("text-gray-500", !playgroundView && "mt-6")}>
-                Note: {!playgroundView ? "Import" : "Parser"} works best on single column resume
+                Note: {!playgroundView ? "Import" : "Parser"} works best on
+                single column resume
               </p>
             </>
           )}

@@ -42,7 +42,6 @@ export const ResumePDFIcon = ({
   if (isPDF) {
     return <PDFIcon pathD={pathD} />;
   }
-
   return <SVGIcon pathD={pathD} />;
 };
 

@@ -48,7 +48,7 @@ export const extractWorkExperience = (sections: ResumeSectionToLines) => {
   const lines = getSectionLinesByKeywords(
     sections,
     WORK_EXPERIENCE_KEYWORDS_LOWERCASE
-  ) as any;
+  );
   const subsections = divideSectionIntoSubsections(lines);
 
   for (const subsectionLines of subsections) {

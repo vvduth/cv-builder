@@ -1,6 +1,6 @@
 import { cx } from "@/app/lib/cx";
 
-const HEADING_CLASSNAME = {
+const HEADING_CLASSNAMES = {
   1: "text-2xl font-bold",
   2: "text-xl font-bold",
   3: "text-lg font-semibold",
@@ -9,13 +9,12 @@ const HEADING_CLASSNAME = {
 export const Heading = ({
   level = 1,
   children,
-  className,
-  smallMarginTop,
+  className = "",
 }: {
   level?: 1 | 2 | 3;
   smallMarginTop?: boolean;
   children: React.ReactNode;
-  className: string;
+  className?: string;
 }) => {
   const Component = `h${level}` as const;
 
@@ -23,7 +22,7 @@ export const Heading = ({
     <Component
       className={cx(
         "mt-[2em] text-gray-900",
-        HEADING_CLASSNAME[level],
+        HEADING_CLASSNAMES[level],
         className
       )}
     >

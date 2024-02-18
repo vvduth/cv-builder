@@ -4,7 +4,7 @@ import { ResumePDFBulletList, ResumePDFSection, ResumePDFText } from "./common";
 import { View } from "@react-pdf/renderer";
 import { spacing, styles } from "./styles";
 
-const ResumePDFWorkExperience = ({
+export const ResumePDFWorkExperience = ({
   heading,
   workExperiences,
   themeColor,
@@ -48,4 +48,3 @@ const ResumePDFWorkExperience = ({
   );
 };
 
-export default ResumePDFWorkExperience;

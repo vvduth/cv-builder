@@ -9,10 +9,10 @@ import { extractResumeFromSections } from "../lib/parse-resume-from-pdf/extract-
 import { FlexboxSpacer } from "../components/FlexboxSpacer";
 import { Heading } from "../components/documentation/Heading";
 import { Paragraph } from "../components/documentation/Paragraph";
-import { readPdf } from "../lib/parse-resume-from-pdf/read-pdf";
 import { cx } from "../lib/cx";
 import ResumeDropzone from "../components/ResumeDropzone";
-import ResumeTable from "./ResumeTable";
+import { ResumeTable } from "./ResumeTable";
+import { readPdf } from "../lib/parse-resume-from-pdf/read-pdf";
 
 const RESUME_EXAMPLES = [
   {

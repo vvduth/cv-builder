@@ -9,7 +9,7 @@ import {
 import { View } from "@react-pdf/renderer";
 import { spacing, styles } from "./styles";
 
-const ResumePDFSkills = ({
+export const ResumePDFSkills = ({
   heading,
   skills,
   themeColor,
@@ -66,4 +66,4 @@ const ResumePDFSkills = ({
   );
 };
 
-export default ResumePDFSkills;
+

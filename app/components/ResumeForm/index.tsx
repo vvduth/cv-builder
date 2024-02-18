@@ -7,7 +7,7 @@ import {
 import { useState } from "react";
 import { ProfileForm } from "./ProfileForm";
 import { ShowForm, selectFormsOrder } from "@/app/lib/redux/settingsSlice";
-import WorkExperiencesForm from "./WorkExperiencesForm";
+import { WorkExperiencesForm } from "./WorkExperiencesForm";
 import { EducationsForm } from "./EducationsForm";
 import { ProjectsForm } from "./ProjectsForm";
 import { SkillsForm } from "./SkillsForm";
@@ -19,7 +19,7 @@ const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
   educations: EducationsForm,
   projects: ProjectsForm,
   skills: SkillsForm,
-  custom:CustomForm,
+  custom: CustomForm,
 };
 
 export const ResumeForm = () => {

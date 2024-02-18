@@ -1,5 +1,4 @@
-import { ResumeKey } from "./../redux/types";
-
+import type { ResumeKey } from "../redux/types";
 export interface TextItem {
   text: string;
   x: number;
@@ -22,7 +21,6 @@ export type ResumeSectionToLines = { [sectionName in ResumeKey]?: Lines } & {
 };
 
 type FeatureScore = -4 | -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4;
-
 type ReturnMatchingTextOnly = boolean;
 
 export type FeatureSet =

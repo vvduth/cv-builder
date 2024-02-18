@@ -1,11 +1,11 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { cx } from "../lib/cx";
-import { Resume } from "../lib/redux/types";
 import { deepClone } from "../lib/parse-resume-from-pdf/deep-clone";
 import {
   initialEducation,
   initialWorkExperience,
 } from "../lib/redux/resumeSlice";
+import { Resume } from "../lib/redux/types";
 
 const TableRowHeader = ({ children }: { children: React.ReactNode }) => (
   <tr className="divide-x bg-gray-50">
@@ -31,12 +31,12 @@ const TableRow = ({
     <td className="w-full px-3 py-2">
       {typeof value === "string"
         ? value
-        : value.map((x, idx) => <Fragment key={idx}>{x}</Fragment>)}
+        : value.map((x, idx) => <Fragment key={idx}>• {x}</Fragment>)}
     </td>
   </tr>
 );
 
-const ResumeTable = ({ resume }: { resume: Resume }) => {
+export const ResumeTable = ({ resume }: { resume: Resume }) => {
   const educations =
     resume.educations.length === 0
       ? [deepClone(initialEducation)]
@@ -106,7 +106,7 @@ const ResumeTable = ({ resume }: { resume: Resume }) => {
         {resume.projects.map((project, idx) => (
           <Fragment key={idx}>
             <TableRow label="Project" value={project.project} />
-            <TableRow label="Url" value={project.url} />
+            <TableRow label="Date" value={project.url} />
             <TableRow
               label="Descriptions"
               value={project.descriptions}
@@ -124,5 +124,3 @@ const ResumeTable = ({ resume }: { resume: Resume }) => {
     </table>
   );
 };
-
-export default ResumeTable;
