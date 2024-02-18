@@ -1,4 +1,4 @@
-import { A4_HEIGHT_PX, LETTER_HEIGHT_PT } from "@/app/lib/constants";
+import { A4_HEIGHT_PX, LETTER_HEIGHT_PX } from "@/app/lib/constants";
 import { useEffect, useState } from "react";
 
 export const getPxPerRem = () => {
@@ -21,44 +21,46 @@ export const useSetDefaultScale = ({
   setScale: (scale: number) => void;
   documentSize: string;
 }) => {
-  const [scaleOnReszie, setScaleOnResize] = useState(true);
+  const [scaleOnResize, setScaleOnResize] = useState(true);
 
   useEffect(() => {
     const getDefaultScale = () => {
       const screenHeightPx = window.innerHeight;
       const PX_PER_REM = getPxPerRem();
       const screenHeightRem = screenHeightPx / PX_PER_REM;
-      const topNavBarHeight = parseFloat(CSS_VARIABLES["--top-nav-bar-height"]);
-      const resumeControlBarheight = parseFloat(
+      const topNavBarHeightRem = parseFloat(
+        CSS_VARIABLES["--top-nav-bar-height"]
+      );
+      const resumeControlBarHeight = parseFloat(
         CSS_VARIABLES["--resume-control-bar-height"]
       );
       const resumePadding = parseFloat(CSS_VARIABLES["--resume-padding"]);
       const topAndBottomResumePadding = resumePadding * 2;
-      const defaultResumeHeightrem =
+      const defaultResumeHeightRem =
         screenHeightRem -
-        topNavBarHeight -
-        resumeControlBarheight -
+        topNavBarHeightRem -
+        resumeControlBarHeight -
         topAndBottomResumePadding;
-      const resumeHeightPx = defaultResumeHeightrem * PX_PER_REM;
-      const height = documentSize === "A4" ? A4_HEIGHT_PX : LETTER_HEIGHT_PT;
+      const resumeHeightPx = defaultResumeHeightRem * PX_PER_REM;
+      const height = documentSize === "A4" ? A4_HEIGHT_PX : LETTER_HEIGHT_PX;
       const defaultScale = Math.round((resumeHeightPx / height) * 100) / 100;
       return defaultScale;
     };
 
-    const setDefaultScale = () => {
+    const setDaultScale = () => {
       const defaultScale = getDefaultScale();
       setScale(defaultScale);
     };
 
-    if (scaleOnReszie) {
-      setDefaultScale();
-      window.addEventListener("resize", setDefaultScale);
+    if (scaleOnResize) {
+      setDaultScale();
+      window.addEventListener("resize", setDaultScale);
     }
 
     return () => {
-      window.removeEventListener("resize", setDefaultScale);
+      window.removeEventListener("resize", setDaultScale);
     };
-  }, [setScale, scaleOnReszie, documentSize]);
+  }, [setScale, scaleOnResize, documentSize]);
 
-  return { scaleOnReszie, setScaleOnResize };
+  return { scaleOnResize, setScaleOnResize };
 };

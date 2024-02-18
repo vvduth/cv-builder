@@ -16,14 +16,14 @@ import {
   WrenchIcon,
 } from "@heroicons/react/24/outline";
 import { DeleteIconButton, MoveIconButton, ShowIconButton } from "./IconButton";
-import ExpanderWithHeightTransition from "../../ExpanderWithHeightTransition";
+
 import {
   addSectionInForm,
   deleteSectionInFormByIdx,
   moveSectionInForm,
 } from "@/app/lib/redux/resumeSlice";
 import { PlusSmallIcon } from "@heroicons/react/24/outline";
-
+import { ExpanderWithHeightTransition } from "../../ExpanderWithHeightTransition";
 const FORM_TO_ICON: { [section in ShowForm]: typeof BuildingOfficeIcon } = {
   workExperiences: BuildingOfficeIcon,
   educations: AcademicCapIcon,

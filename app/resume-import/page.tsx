@@ -19,7 +19,7 @@ export default function ImportResume() {
 
   return (
     <main>
-      <div className="mx-auto mt-14 max-w-3xl rounded-md border border-gray-200 px10 py-10 text-center shadow-md">
+      <div className="mx-auto mt-14 max-w-3xl rounded-md border border-gray-200 px-10 py-10 text-center shadow-md">
         {!hasUsedAppBefore ? (
           <>
             <h1 className="text-lg font-semibold text-gray-900">
@@ -33,7 +33,7 @@ export default function ImportResume() {
               <>
                 <OrDivider />
                 <SectionWithHeadingAndCreateButton
-                  heading="Donät have a resume yet?"
+                  heading="Don't have a resume yet?"
                   buttonText="Create from scratch"
                 />
               </>
@@ -44,8 +44,8 @@ export default function ImportResume() {
             {!hasAddedResume && (
               <>
                 <SectionWithHeadingAndCreateButton
-                  heading="You have datat saved in browser from prior session"
-                  buttonText="Continue from where you left off"
+                  heading="You have data saved in browser from prior session"
+                  buttonText="Continue where I left off"
                 />
                 <OrDivider />
               </>
@@ -71,6 +71,7 @@ const OrDivider = () => (
     <div className="flex-grow border-t border-gray-200" />
   </div>
 );
+
 const SectionWithHeadingAndCreateButton = ({
   heading,
   buttonText,
@@ -83,9 +84,8 @@ const SectionWithHeadingAndCreateButton = ({
       <p className="font-semibold text-gray-900">{heading}</p>
       <div className="mt-5">
         <Link
-          href={"/resume-builder"}
-          className="outline-theme-blue rounded-full bg-sky-500 px-6 pb-2 pt-1.5 text-base
-                font-semibold text-white"
+          href="/resume-builder"
+          className="outline-theme-blue rounded-full bg-sky-500 px-6 pb-2 pt-1.5 text-base font-semibold text-white"
         >
           {buttonText}
         </Link>

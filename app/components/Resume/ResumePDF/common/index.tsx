@@ -1,8 +1,7 @@
+import { Text, View, Link } from "@react-pdf/renderer";
 import type { Style } from "@react-pdf/types";
-import { View, Text } from "@react-pdf/renderer";
 import { styles, spacing } from "../styles";
 import { DEFAULT_FONT_COLOR } from "@/app/lib/redux/settingsSlice";
-import { Link } from "@react-pdf/renderer";
 
 export const ResumePDFSection = ({
   themeColor,
@@ -89,7 +88,6 @@ export const ResumePDFLink = ({
       </Link>
     );
   }
-
   return (
     <a
       href={src}
@@ -104,7 +102,7 @@ export const ResumePDFLink = ({
 
 export const ResumePDFBulletList = ({
   items,
-  showBulletPoints,
+  showBulletPoints = true,
 }: {
   items: string[];
   showBulletPoints?: boolean;
@@ -125,6 +123,7 @@ export const ResumePDFBulletList = ({
               {"."}
             </ResumePDFText>
           )}
+
           <ResumePDFText
             style={{ lineHeight: "1.3", flexGrow: 1, flexBasis: 0 }}
           >

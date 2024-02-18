@@ -1,5 +1,5 @@
 import React from "react";
-import FlexboxSpacer from "../components/FlexboxSpacer";
+import { FlexboxSpacer } from "../components/FlexboxSpacer";
 import Link from "next/link";
 import { AutoTypingResume } from "./AutoTypingResume";
 

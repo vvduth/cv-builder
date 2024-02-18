@@ -6,7 +6,7 @@ import { TextItems } from "../lib/parse-resume-from-pdf/types";
 import { groupTextItemsIntoLines } from "../lib/parse-resume-from-pdf/group-text-items-into-lines";
 import { groupLinesIntoSections } from "../lib/parse-resume-from-pdf/group-lines-into-sections";
 import { extractResumeFromSections } from "../lib/parse-resume-from-pdf/extract-resume-from-sections";
-import FlexboxSpacer from "../components/FlexboxSpacer";
+import { FlexboxSpacer } from "../components/FlexboxSpacer";
 import { Heading } from "../components/documentation/Heading";
 import { Paragraph } from "../components/documentation/Paragraph";
 import { readPdf } from "../lib/parse-resume-from-pdf/read-pdf";
@@ -14,7 +14,7 @@ import { cx } from "../lib/cx";
 import ResumeDropzone from "../components/ResumeDropzone";
 import ResumeTable from "./ResumeTable";
 
-const RESUME_EXAMPLE = [
+const RESUME_EXAMPLES = [
   {
     fileUrl: "resume-example/public-resume.pdf",
     description: <span>Took from public sources</span>,
@@ -23,13 +23,15 @@ const RESUME_EXAMPLE = [
     fileUrl: "resume-example/inhouse-resume.pdf",
     description: (
       <span>
-        Created with inhouse resume Builder - <Link href={"/resume-builder"} />
+        Created with Inhouse Resume Builder -{" "}
+        <Link href="/resume-builder">Link</Link>
       </span>
     ),
   },
 ];
 
-const defaultFileUrl = RESUME_EXAMPLE[1]["fileUrl"];
+const defaultFileUrl = RESUME_EXAMPLES[1]["fileUrl"];
+
 export default function ResumeParser() {
   const [fileUrl, setFileUrl] = useState(defaultFileUrl);
 
@@ -57,32 +59,31 @@ export default function ResumeParser() {
           </section>
           <FlexboxSpacer maxWidth={45} className="hidden md:block" />
         </div>
-        <div className="flex px-6 text-gray-900 md:col-span-3 md-h-[calc(100vh-var(--top-nav-bar-height))] md:overflow-y-5">
+        <div className="flex px-6 text-gray-900 md:col-span-3 md-h-[calc(100vh-var(--top-nav-bar-height))] md:overflow-y-scroll">
           <FlexboxSpacer maxWidth={45} className="hidden md:block" />
           <section className="max-w-[600px] grow">
             <Heading className="text-primary !mt-4">
-              Resume parser Playground
+              Resume Parser Playground
             </Heading>
             <Paragraph smallMarginTop={true}>
               This playground showcases the Inhouse resume parser and its
-              ability to parse information froma resume PDF. Click around the
+              ability to parse information from a resume PDF. Click around the
               PDF examples below to observe different parsing results.
             </Paragraph>
             <div className="mt-3 flex gap-3">
-              {RESUME_EXAMPLE.map((example, idx) => (
+              {RESUME_EXAMPLES.map((example, idx) => (
                 <article
                   key={idx}
                   className={cx(
-                    "flex cursor-pointer rounded-md border-2 px-4 py-3 shadow-sm outline-none hover:bg-gray-50 focus:bg-gray-50",
+                    "flex-1 cursor-pointer rounded-md border-2 px-4 py-3 shadow-sm outline-none hover:bg-gray-50 focus:bg-gray-50",
                     example.fileUrl === fileUrl
                       ? "border-blue-400"
                       : "border-gray-300"
                   )}
                   onClick={() => setFileUrl(example.fileUrl)}
                   onKeyDown={(e) => {
-                    if (["Enter", " "].includes(e.key)) {
+                    if (["Enter", " "].includes(e.key))
                       setFileUrl(example.fileUrl);
-                    }
                   }}
                   tabIndex={0}
                 >
@@ -112,7 +113,7 @@ export default function ResumeParser() {
             <Heading level={2} className="!mt-[1.2em]">
               Resume Parsing Results
             </Heading>
-            <ResumeTable resume={resume}/>
+            <ResumeTable resume={resume} />
           </section>
         </div>
       </div>

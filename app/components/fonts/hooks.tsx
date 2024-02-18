@@ -13,7 +13,7 @@ export const useRegisterReactPDFFont = () => {
             src: `fonts/${fontFamily}-Regular.ttf`,
           },
           {
-            src: `font/${fontFamily}-Bold.ttf`,
+            src: `fonts/${fontFamily}-Bold.ttf`,
             fontWeight: "bold",
           },
         ],
@@ -22,7 +22,7 @@ export const useRegisterReactPDFFont = () => {
   }, []);
 };
 
-export const useRegisterReactPDFHypernationCallback = (fontFamily: string) => {
+export const useRegisterReactPDFHypenationCallback = (fontFamily: string) => {
   useEffect(() => {
     if (FONT_FAMILIES.includes(fontFamily as any)) {
       Font.registerHyphenationCallback((word) => [word]);

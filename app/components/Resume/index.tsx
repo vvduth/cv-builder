@@ -4,13 +4,13 @@ import { useAppSelector } from "@/app/lib/redux/hooks";
 import { selectResume } from "@/app/lib/redux/resumeSlice";
 import { selectSettings } from "@/app/lib/redux/settingsSlice";
 import { useMemo, useState } from "react";
-import FlexboxSpacer from "../FlexboxSpacer";
+import { FlexboxSpacer } from "../FlexboxSpacer";
 import { ResumeIFrameCSR } from "./ResumeIFrame";
 import { ResumePDFProfile } from "./ResumePDF/ResumePDFProfile";
 import { ResumePDF } from "./ResumePDF";
 import {
   useRegisterReactPDFFont,
-  useRegisterReactPDFHypernationCallback,
+  useRegisterReactPDFHypenationCallback,
 } from "../fonts/hooks";
 import { ResumeControlBarCSR } from "./ResumeControlBar";
 
@@ -24,7 +24,7 @@ export const Resume = () => {
   );
 
   useRegisterReactPDFFont();
-  useRegisterReactPDFHypernationCallback(settings.fontFamily);
+  useRegisterReactPDFHypenationCallback(settings.fontFamily);
 
   return (
     <>

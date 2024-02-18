@@ -2,7 +2,7 @@
 
 import {
   ArrowDownTrayIcon,
-  MagnifyingGlassCircleIcon,
+  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import dynamic from "next/dynamic";
 import { useSetDefaultScale } from "./hooks";
@@ -22,25 +22,20 @@ const ResumeControlBar = ({
   document: JSX.Element;
   fileName: string;
 }) => {
+  const { scaleOnResize, setScaleOnResize } = useSetDefaultScale({
+    setScale,
+    documentSize,
+  });
 
-    const {scaleOnReszie, setScaleOnResize} = useSetDefaultScale({
-        setScale, 
-        documentSize,
-    })
+  const [instance, update] = usePDF({ document });
 
-    const [instance, update] = usePDF({document})
-
-    useEffect(()=> {
-        update(document)
-    },[update, document])
+  useEffect(() => {
+    update(document);
+  }, [update, document]);
   return (
-    <div
-      className="sticky bottom-0 left-0 right-0 
-        flex h-[var(--resume-control-bar-height)]  items-center justify-center 
-        px-[var(--resume-padding)] text-gray-600 lg:justify-between"
-    >
+    <div className="sticky bottom-0 left-0 right-0 flex h-[var(--resume-control-bar-height)]  items-center justify-center px-[var(--resume-padding)] text-gray-600 lg:justify-between">
       <div className="flex items-center gap-2">
-        <MagnifyingGlassCircleIcon className="h-5 w-5" aria-hidden="true" />
+        <MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" />
         <input
           type="range"
           min={0.5}
@@ -48,8 +43,8 @@ const ResumeControlBar = ({
           step={0.01}
           value={scale}
           onChange={(e) => {
-            setScaleOnResize(false)
-            setScale(Number(e.target.value))
+            setScaleOnResize(false);
+            setScale(Number(e.target.value));
           }}
         />
         <div className="w-10">{`${Math.round(scale * 100)}%`}</div>
@@ -58,14 +53,13 @@ const ResumeControlBar = ({
             type="checkbox"
             className="mt-0.5 h-4 w-4"
             checked={true}
-            onChange={() =>setScaleOnResize((prev) => !prev)}
+            onChange={() => setScaleOnResize((prev) => !prev)}
           />
           <span className="select-none">Autoscale</span>
         </label>
       </div>
       <a
-        className="ml-1 flex items-center gap-1 rounded-md border border-gray-300
-       px-3 py-0.5 hover:bg-gray-100 lg:ml-8"
+        className="ml-1 flex items-center gap-1 rounded-md border border-gray-300 px-3 py-0.5 hover:bg-gray-100 lg:ml-8"
         href={instance.url!}
         download={fileName}
       >
