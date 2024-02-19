@@ -18,7 +18,7 @@ export const SkillsForm = () => {
   const showBulletPoints = useAppSelector(selectShowBulletPoints(form));
   const themeColor = useAppSelector(selectThemeColor) || "#38bdf8";
 
-  const handleSkillsChanges = (field: "descriptions", value: string[]) => {
+  const handleSkillsChange = (field: "descriptions", value: string[]) => {
     dispatch(changeSkills({ field, value }));
   };
 
@@ -44,7 +44,7 @@ export const SkillsForm = () => {
             name="descriptions"
             placeholder="Bullet Points"
             value={descriptions}
-            onChange={handleSkillsChanges}
+            onChange={handleSkillsChange}
             showBulletPoints={showBulletPoints}
           />
           <div className="absolute left-[4.5rem] top-[0.07rem]">

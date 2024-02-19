@@ -106,7 +106,7 @@ export const ResumeTable = ({ resume }: { resume: Resume }) => {
         {resume.projects.map((project, idx) => (
           <Fragment key={idx}>
             <TableRow label="Project" value={project.project} />
-            <TableRow label="Date" value={project.url} />
+            <TableRow label="URL" value={project.url} />
             <TableRow
               label="Descriptions"
               value={project.descriptions}

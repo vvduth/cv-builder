@@ -128,6 +128,7 @@ export const resumeSlice = createSlice({
       const { field } = action.payload;
       if (field === "descriptions") {
         const { value } = action.payload;
+        draft.skills.descriptions = value;
       } else {
         const { idx, skill, rating } = action.payload;
         const featuredSkill = draft.skills.featuredSkills[idx];

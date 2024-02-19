@@ -1,26 +1,21 @@
 import {
-  FeatureSet,
-  ResumeSectionToLines,
-  TextItem,
-  TextItems,
-} from "../types";
-import {
   hasLetter,
   hasLetterAndIsAllUpperCase,
   isBold,
 } from "../group-lines-into-sections";
+import { FeatureSet, ResumeSectionToLines, TextItem } from "../types";
 import { getTextWithHighestFeatureScore } from "./lib/feature-scoring-system";
 import { getSectionLinesByKeywords } from "./lib/get-section-lines";
 
-// Name
+//Name
 export const matchOnlyLetterSpaceOrPeriod = (item: TextItem) =>
   item.text.match(/^[A-Za-z\s\.]+$/);
 
-// Email
+//Email
 export const matchEmail = (item: TextItem) => item.text.match(/\S+@\S+\.\S+/);
 const hasAt = (item: TextItem) => item.text.includes("@");
 
-// Phone
+//Phone
 export const matchPhone = (item: TextItem) =>
   item.text.match(/\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}/);
 const hasParenthesis = (item: TextItem) => /\([0-9]+\)/.test(item.text);
@@ -108,6 +103,7 @@ export const extractProfile = (sections: ResumeSectionToLines) => {
     textItems,
     NAME_FEATURE_SETS
   );
+
   const [email, emailScores] = getTextWithHighestFeatureScore(
     textItems,
     EMAIL_FEATURE_SETS
@@ -133,31 +129,32 @@ export const extractProfile = (sections: ResumeSectionToLines) => {
 
   const summaryLines = getSectionLinesByKeywords(sections, ["summary"]);
   const summarySection = summaryLines
-    ?.flat()
+    .flat()
     .map((textItem) => textItem.text)
     .join(" ");
 
   const objectiveLines = getSectionLinesByKeywords(sections, ["objective"]);
   const objectiveSection = objectiveLines
-    ?.flat()
+    .flat()
     .map((textItem) => textItem.text)
     .join(" ");
 
-    return {
-      profile: {
-        name, 
-        email, 
-        phone, 
-        location, 
-        url,
-        summary: summarySection || objectiveSection ||summary, 
-      },
-      profileScores: {
-        name: nameScores,
-        email: emailScores,
-        phone: phoneScores,
-        location: locationScores,
-        url: urlScores
-      }
-    }
+  return {
+    profile: {
+      name,
+      email,
+      phone,
+      location,
+      url,
+      summary: summarySection || objectiveSection || summary,
+    },
+    profileScores: {
+      name: nameScores,
+      email: emailScores,
+      phone: phoneScores,
+      location: locationScores,
+      url: urlScores,
+      summary: summaryScores,
+    },
+  };
 };
