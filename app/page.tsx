@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Hero from './home/Hero'
+import { Hero } from './home/Hero'
 import Steps from './home/Steps'
 
 export default function Home() {
