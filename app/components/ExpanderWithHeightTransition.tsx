@@ -1,10 +1,9 @@
-import React from 'react'
-
 export const ExpanderWithHeightTransition = ({
-    expanded, children
+  expanded,
+  children,
 }: {
-    expanded: boolean,
-    children: React.ReactNode,
+  expanded: boolean;
+  children: React.ReactNode;
 }) => {
   return (
     <div
