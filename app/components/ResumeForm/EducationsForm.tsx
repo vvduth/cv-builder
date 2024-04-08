@@ -8,7 +8,7 @@ import {
   selectShowBulletPoints,
 } from "@/app/lib/redux/settingsSlice";
 import { Form, FormSection } from "./Form";
-import { CreatehandleChangeArgsWithDescriptions } from "./types";
+import { CreateHandleChangeArgsWithDescriptions } from "./types";
 import { ResumeEducation } from "@/app/lib/redux/types";
 import { BulletListTextArea, Input } from "./Form/InputGroup";
 import { BulletListiconButton } from "./Form/IconButton";
@@ -27,7 +27,7 @@ export const EducationsForm = () => {
           ...[
             field,
             value,
-          ]: CreatehandleChangeArgsWithDescriptions<ResumeEducation>
+          ]: CreateHandleChangeArgsWithDescriptions<ResumeEducation>
         ) => {
           dispatch(changeEducations({ idx, field, value } as any));
         };
